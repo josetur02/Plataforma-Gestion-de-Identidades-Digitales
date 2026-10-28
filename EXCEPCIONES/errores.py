@@ -1,5 +1,4 @@
 class ZeroTrustBaseError(Exception):
-    """Clase raíz de la que heredan todos los errores de la plataforma."""
     def __init__(self, codigo, mensaje):
         self.codigo = codigo
         self.mensaje = mensaje

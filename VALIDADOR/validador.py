@@ -18,7 +18,6 @@ class Validador:
     def validar_sobre_digital(self, ruta_sobre):
         print(f"\n[VALIDADOR] Analizando paquete: {ruta_sobre}")
         
-        # 1. Delegar la apertura del archivo al Handler
         contenido, firma_bytes, cert_bytes = self.handler.desempaquetar(ruta_sobre)
         cert_usuario = x509.load_pem_x509_certificate(cert_bytes)
 

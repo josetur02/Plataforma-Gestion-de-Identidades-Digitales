@@ -25,7 +25,6 @@ class HandlerSobreDigital:
     @staticmethod
     def desempaquetar(ruta_sobre):
         """Abre el JSON de forma segura y devuelve los bytes originales."""
-        # Delegamos la lectura segura al gestor de archivos
         texto_json = GestorArchivos.leer_texto(ruta_sobre)
         
         # 1. Comprobamos la integridad del archivo (¿Es un JSON válido? ¿Tiene las 3 piezas?)
