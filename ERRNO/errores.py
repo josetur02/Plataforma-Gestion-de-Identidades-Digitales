@@ -7,19 +7,17 @@
 *  Trabajo de Fin de Grado (TFG)
 *
 *  TÍTULO:
-*  "Sistema de Firma Digital Basado en Criptografía de Curva Elíptica (ECC)"
+*  "Plataforma de Gestión de Identidades Digitales"
 *
 *  AUTOR:
-*  [Tu Nombre]
+*  Jose Tur Román
 *
-*  DIRECTOR:
-*  [Nombre del Tutor]
+*  Tutores:
+*  Andrés Ruiz, Jesús Rosa
 *
 *  DESCRIPCIÓN:
-*  Módulo ERRNO (Gestión de Excepciones). 
-*  Define la jerarquía de errores personalizados de la plataforma para 
-*  estandarizar la captura de fallos, ocultar detalles técnicos a posibles 
-*  atacantes y facilitar la auditoría del sistema (Zero Trust).
+*  Módulo Errno. 
+*  Gestión de errores y excepciones.
 *
 *  COPYRIGHT:
 *  © 2026 Universidad de Cádiz (UCA)
@@ -31,22 +29,9 @@
 ******************************************************************************
 """
 
-"""
-******************************************************************************
-*                     BIBLIOTECAS Y CABECERAS IMPORTADAS
-******************************************************************************
-"""
-# No hay dependencias externas. Este módulo provee las clases base.
-
-"""
-******************************************************************************
-*                     CLASE BASE DE LA PLATAFORMA
-******************************************************************************
-"""
-
 class Errores(Exception):
     """
-    Clase base para todos los errores personalizados de la plataforma.
+    Clase base para todos los posibles errores.
     Proporciona un código de error y un mensaje descriptivo.
     """
     def __init__(self, codigo: str, mensaje: str):
@@ -54,3 +39,32 @@ class Errores(Exception):
         self.mensaje = mensaje
         super().__init__(f"[{self.codigo}] {self.mensaje}")
 
+
+"""
+******************************************************************************
+*                     ERRORES MÓDULO FIO
+******************************************************************************
+"""
+
+class FIO_Errno(Errores): pass
+
+class RutaNoEncontradaError(FIO_Errno):
+    """
+    Error lanzado cuando una ruta no es encontrada.
+    """
+    def __init__(self, ruta: str):
+        super().__init__("ERR-FIO-001", f"La ruta requerida no existe: {ruta}")
+
+class TamanoExcedidoError(FIO_Errno):
+    """
+    Error lanzado cuando un archivo excede el tamaño permitido.
+    """
+    def __init__(self, tamano_mb: float, limite_mb: int):
+        super().__init__("ERR-FIO-002", f"Archivo demasiado grande ({tamano_mb:.2f} MB). Límite de seguridad: {limite_mb} MB.")
+
+class ArchivoNoEncontradoError(FIO_Errno):
+    """
+    Error lanzado cuando un archivo no es encontrado.
+    """
+    def __init__(self, ruta: str):
+        super().__init__("ERR-FIO-003", f"El archivo requerido no existe: {ruta}")
